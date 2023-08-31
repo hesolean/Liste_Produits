@@ -18,7 +18,7 @@ class SearcheBar extends React.Component {
 
     handelFilterTextChange(e) {
         // on appelle la méthode du composant parent pour passer l'information
-        this.props.onFilterChange(e.target.value)
+        this.props.onFilterTextChange(e.target.value)
     }
 
     handelInStockChange(e) {
@@ -28,8 +28,8 @@ class SearcheBar extends React.Component {
 
     render() {
         const {filterText, inStockOnly} = this.props
-        return <div>
-            <div className="form-group">
+        return <div className="mb-2">
+            <div className="form-group mb-0">
                 <input 
                     type="text" 
                     value={filterText} 
@@ -54,7 +54,7 @@ class SearcheBar extends React.Component {
     }
 }
 
-function ProductTable({products}) {
+function ProductTable({products, inStockOnly, filterText}) {
     const rows = []
     // on piste la dernière catégorie rencontrée
     let lastCategory = null
@@ -63,6 +63,10 @@ function ProductTable({products}) {
     // une condition sur la catégorie pour changer de groupe
 
     products.forEach((product => {
+        if ((inStockOnly && !product.stocked) || product.name.indexOf(filterText) === -1) {
+            return
+        }
+        
         if (product.category !== lastCategory) {
             lastCategory = product.category
             // à chaque nouvelle categorie, je pousse le nom de la categorie
@@ -130,7 +134,11 @@ render() {
             onFilterTextChange={this.handelFilterTextChange} 
             onInStockOnlyChange={this.handelInStockChange}
         />
-        <ProductTable products={products}/>
+        <ProductTable 
+            filterText={this.state.filterText}
+            inStockOnly={this.state.inStockOnly}
+            products={products}
+        />
     </React.Fragment>
 }
 }
