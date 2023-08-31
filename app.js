@@ -8,10 +8,22 @@ const PRODUCTS = [
     {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
   ];
 
+class SearcheBar extends React.Component {
+
+}
+
 function ProductTable({products}) {
     return <table className="table">
-        
+
     </table>
+}
+
+class ProductCategoryRow extends React.Component {
+
+}
+
+class ProductRow extends React.Component {
+    
 }
 
 class FilterableProducTable extends React.Component {
